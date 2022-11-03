@@ -28,16 +28,15 @@ app.get('/api/:date?', (req, res) => {
 	let date_unix = req.params.date
 
 	const getDate = (unix) => {
-	if(unix){
-		let parse_unix = Number(unix)
-		if(new Date(parse_unix) == 'Invalid Date'){
+		if(unix){
+		if(Date(unix) == 'Invalid Date'){
 			return {
 				error: 'Invalid Date'
 			}
 		} else{
 			return {
-				unix: parse_unix,
-				utc: new Date(parse_unix).toUTCString()
+				unix: Number(unix),
+				utc: new Date(unix).toUTCString()
 			}			
 		}
 	} else{
