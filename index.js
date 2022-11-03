@@ -29,27 +29,32 @@ app.get('/api/:date?', (req, res) => {
 
 	const getDate = (unix) => {
 		if(unix){
-		if(new Date(Number(unix)) == 'Invalid Date'){
-			return {
-				error: 'Invalid Date'
+			if(new Date(unix) != 'Invalid Date' && new Date(Number(unix)) == 'Invalid Date'){
+				return {
+					unix: Date.parse(new Date(unix)),
+					utc: new Date(unix).toUTCString()
+				}
+			} else if(new Date(unix) == 'Invalid Date' && new Date(Number(unix)) != 'Invalid Date'){
+				return {
+					unix: Number(unix),
+					utc: new Date(Number(unix)).toUTCString()
+				}			
+			} else {
+				return {
+					error: 'Invalid Date'
+				}
 			}
-		} else{
+	} else {
 			return {
-				unix: Number(unix),
-				utc: new Date(unix).toUTCString()
-			}			
-		}
-	} else{
-		return {
-			unix: Date.now(),
-			utc: new Date().toUTCString()
-		}
+				unix: Date.now(),
+				utc: new Date().toUTCString()
+			}
 	}
 }
 
 	if(date_unix){
 		return res.send(getDate(date_unix))
-	}	else{
+	}	else {
 		return res.send(getDate())
 	}
 
