@@ -29,7 +29,7 @@ app.get('/api/:date?', (req, res) => {
 
 	const getDate = (unix) => {
 		if(unix){
-		if(Date(unix) == 'Invalid Date'){
+		if(new Date(Number(unix)) == 'Invalid Date'){
 			return {
 				error: 'Invalid Date'
 			}
